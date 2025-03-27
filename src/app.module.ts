@@ -1,9 +1,18 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [UserModule, PrismaModule],
+  imports: [
+    UserModule,
+    PrismaModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'src', 'user', 'uploads'),
+      serveRoot: '/uploads',
+    }),
+  ],
 })
 export class AppModule implements OnModuleInit {
   onModuleInit() {

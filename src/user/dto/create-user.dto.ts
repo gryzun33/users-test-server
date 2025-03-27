@@ -22,7 +22,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   address: string;
 
-  @IsString()
   @IsOptional()
-  photo: string;
+  photoFile?: Express.Multer.File | null;
+
+  @IsOptional()
+  photo?: string | null;
 }
