@@ -22,7 +22,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async getUserById(@Param('id') id: string): Promise<User | null> {
+  async getUserById(@Param('id') id: string): Promise<User> {
     return this.userService.getUserById(id);
   }
 
