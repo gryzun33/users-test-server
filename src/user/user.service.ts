@@ -33,8 +33,10 @@ export class UserService {
         await fs.rename(photoFile.path, photoPath);
 
         userData.photo = `/uploads/${photoFile.filename}`;
-      } catch (error) {
-        throw new Error(`Failed to save photo: ${error.message}`);
+      } catch (err) {
+        if (err instanceof Error) {
+          throw new Error(`Failed to save photo: ${err.message}`);
+        }
       }
     }
 
@@ -65,11 +67,14 @@ export class UserService {
             await fs.access(oldPhotoPath);
             await fs.unlink(oldPhotoPath);
           } catch (err) {
-            console.error('Old photo does not exist:', err.message);
+            if (err instanceof Error) {
+              console.error('Old photo does not exist:', err.message);
+            }
           }
         }
       } catch (error) {
-        throw new Error(`Failed to update photo: ${error.message}`);
+        if (error instanceof Error)
+          throw new Error(`Failed to update photo: ${error.message}`);
       }
     } else if (updateUserDto.deletePhoto) {
       userData.photo = null;

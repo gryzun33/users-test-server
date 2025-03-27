@@ -1,7 +1,7 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
-import { CatchEverythingFilter } from './common/filters/catch-everything.filter';
+import { CatchEverythingFilter } from './common/catch-everything.filter';
 import { ValidationPipe } from '@nestjs/common';
 
 dotenv.config();
