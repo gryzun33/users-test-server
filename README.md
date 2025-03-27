@@ -25,6 +25,12 @@ npm install
 
 ## Run project
 
+To create database (apply prisma migrations and add seeds)
+
+```
+npm run migrate:seed
+```
+
 To run project in development mode
 
 ```

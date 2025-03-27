@@ -16,7 +16,7 @@
     "migrate:dev": "npx prisma migrate dev",
     "db:seed": "ts-node prisma/seed.ts",
     "db:reset": "npx prisma migrate reset",
-    "migrate:seed": "npm run migrate:dev && npm run seed"
+    "migrate:seed": "npm run migrate:dev && npm run db:seed"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
