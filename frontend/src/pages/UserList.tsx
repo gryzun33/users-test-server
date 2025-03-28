@@ -1,10 +1,9 @@
 import { useGetUsersQuery } from '@/api/userApi';
+import UserCard from '@/features/UserCard';
 import { User } from '@/types/user';
 
 const UserList = () => {
   const { data, error, isLoading } = useGetUsersQuery();
-
-  console.log('data=', data);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -13,14 +12,14 @@ const UserList = () => {
   if (error) {
     return <div>Error loading users!</div>;
   }
-
+  console.log('data=', data);
   return (
     <div>
       <h1>User List</h1>
       <ul>
         {data?.map((user: User) => (
           <li key={user.id}>
-            <div>{`${user.firstName} ${user.lastName}`}</div>
+            <UserCard {...user} />
           </li>
         ))}
       </ul>
