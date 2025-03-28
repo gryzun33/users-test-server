@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -15,7 +21,7 @@ export class CreateUserDto {
   @IsNumber()
   weight: number;
 
-  @IsString()
+  @IsIn(['male', 'female', 'other'])
   gender: string;
 
   @IsString()
