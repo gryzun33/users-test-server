@@ -14,9 +14,8 @@ const UserList = () => {
   }
   console.log('data=', data);
   return (
-    <div>
-      <h1>User List</h1>
-      <ul>
+    <div className="mx-auto max-w-7xl">
+      <ul className="w-full flex flex-wrap justify-center lg:justify-between gap-6">
         {data?.map((user: User) => (
           <li key={user.id}>
             <UserCard {...user} />

@@ -45,7 +45,7 @@ const UserCard = ({ ...user }: User) => {
         <p className="text-gray-700">Address: {user.address}</p>
       </CardContent>
 
-      <CardFooter className="flex justify-between items-center mt-4">
+      <CardFooter className="flex justify-between items-center mt-auto">
         <IconButton onClick={handleEdit} Icon={Pencil} />
         <IconButton onClick={handleDelete} Icon={Trash2} />
       </CardFooter>
