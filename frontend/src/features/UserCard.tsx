@@ -19,7 +19,7 @@ const UserCard = ({ ...user }: User) => {
   };
 
   return (
-    <Card className="bg-white shadow-md rounded-lg w-64">
+    <Card className="bg-white shadow-md rounded-lg w-70 xl:w-full">
       <CardHeader className="h-48 bg-gray-200 rounded-t-lg overflow-hidden">
         {user.photo ? (
           <img

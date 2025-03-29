@@ -20,8 +20,8 @@ const UserList = () => {
   console.log('users=', users);
   console.log('totalpages=', totalPages);
   return (
-    <div className="mx-auto max-w-7xl">
-      <ul className="w-full flex flex-wrap justify-center lg:justify-between gap-6">
+    <div className="mx-auto xl:max-w-7xl flex flex-col">
+      <ul className="self-center inline-grid grid-cols-auto xl:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 xl:gap-6 pb-5">
         {users.map((user: User) => (
           <li key={user.id}>
             <UserCard {...user} />

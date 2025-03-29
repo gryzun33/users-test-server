@@ -46,7 +46,7 @@ export function DynamicPagination({ totalPages }: Props) {
   const rightEllipsis = endPage < totalPages;
 
   return (
-    <Pagination>
+    <Pagination className="mb-0 mt-auto">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
