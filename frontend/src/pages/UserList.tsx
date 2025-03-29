@@ -8,7 +8,7 @@ const UserList = () => {
     data: { users = [], totalPages = 1 } = {},
     error,
     isLoading,
-  } = useGetUsersQuery({ page: 1, limit: 12 });
+  } = useGetUsersQuery({ page: 1, limit: 100 });
 
   if (isLoading) {
     return <div>Loading...</div>;

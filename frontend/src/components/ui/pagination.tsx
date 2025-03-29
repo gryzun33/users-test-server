@@ -34,7 +34,9 @@ function PaginationContent({
 }
 
 function PaginationItem({ ...props }: React.ComponentProps<'li'>) {
-  return <li data-slot="pagination-item" {...props} />;
+  return (
+    <li data-slot="pagination-item" {...props} className="text-slate-700" />
+  );
 }
 
 type PaginationLinkProps = {

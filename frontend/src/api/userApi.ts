@@ -11,7 +11,7 @@ export const userApi = createApi({
       PaginatedUsersResponse,
       { page: number; limit: number }
     >({
-      query: () => '/user',
+      query: ({ page, limit }) => `/user?page=${page}&limit=${limit}`,
     }),
   }),
 });

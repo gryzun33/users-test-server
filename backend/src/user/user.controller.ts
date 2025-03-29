@@ -29,6 +29,8 @@ export class UserController {
     @Query('page') page: string = '1',
     @Query('limit') limit: string = '12',
   ): Promise<PaginatedUsersResponse> {
+    console.log('page=', typeof page, page);
+    console.log('limit=', typeof limit, limit);
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
     return this.userService.getAllUsers(pageNumber, limitNumber);

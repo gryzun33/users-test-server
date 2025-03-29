@@ -19,19 +19,19 @@ const Layout = () => {
             {isOnUserList && (
               <Link
                 to="/create"
-                className="flex min-w-[185px] gap-2 px-4 py-2 bg-currentColor border-[1px] border-slate-300 text-slate-200 hover:text-white font-medium rounded-lg hover:bg-slate-500 transition-colors"
+                className="flex sm:min-w-[185px] gap-2 px-4 py-2 bg-currentColor border-[1px] border-slate-300 text-slate-200 hover:text-white font-medium rounded-lg hover:bg-slate-500 transition-colors"
               >
                 <Plus />
-                <span> Add New User</span>
+                <span className="hidden sm:inline"> Add New User</span>
               </Link>
             )}
             {isOnCreateUser && (
               <Link
                 to="/users"
-                className="flex min-w-[185px] gap-2 px-4 py-2 bg-currentColor border-[1px] border-slate-300 text-slate-200 hover:text-white font-medium rounded-lg hover:bg-slate-500 transition-colors"
+                className="flex sm:min-w-[185px] gap-2 px-4 py-2 bg-currentColor border-[1px] border-slate-300 text-slate-200 hover:text-white font-medium rounded-lg hover:bg-slate-500 transition-colors"
               >
                 <ArrowLeft />
-                <span> Back to Userlist</span>
+                <span className="hidden sm:inline"> Back to Userlist</span>
               </Link>
             )}
           </nav>
