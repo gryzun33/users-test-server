@@ -1,10 +1,11 @@
 import { useGetUsersQuery } from '@/api/userApi';
+import DynamicPagination from '@/features/DynamicPagination';
 import UserCard from '@/features/UserCard';
 import { User } from '@/types/user';
 
 const UserList = () => {
   const {
-    data: { users = [], totalPages } = {},
+    data: { users = [], totalPages = 1 } = {},
     error,
     isLoading,
   } = useGetUsersQuery({ page: 1, limit: 12 });
@@ -27,6 +28,7 @@ const UserList = () => {
           </li>
         ))}
       </ul>
+      <DynamicPagination totalPages={totalPages} />
     </div>
   );
 };
