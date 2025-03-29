@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import Layout from './components/Layout';
-import UserList from './pages/UserList';
+import UserListPage from './pages/UserListPage';
 import CreateUser from './pages/CreateUser';
 import PageNotFound from './pages/PageNotFound';
 
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/users" />} />
         <Route element={<Layout />}>
-          <Route path="/users" element={<UserList />} />
+          <Route path="/users" element={<UserListPage />} />
           <Route path="/create" element={<CreateUser />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>

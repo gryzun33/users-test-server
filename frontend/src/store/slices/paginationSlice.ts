@@ -23,7 +23,7 @@ const paginationSlice = createSlice({
 const persistConfig = {
   key: 'pagination',
   storage,
-  whitelist: ['pagination'],
+  whitelist: ['currentPage'],
 };
 
 const persistedPaginationReducer = persistReducer(

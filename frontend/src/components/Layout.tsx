@@ -1,6 +1,7 @@
 import { Link, Outlet, useLocation } from 'react-router';
 import { Plus } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
+import { USERS_PER_PAGE } from '@/utils/constants';
 
 const Layout = () => {
   const location = useLocation();
@@ -12,7 +13,10 @@ const Layout = () => {
     <div className="flex flex-col min-h-screen">
       <header className="bg-slate-700 w-full p-4 ">
         <div className="flex max-w-7xl mx-auto justify-between items-center">
-          <Link to="/" className="text-2xl font-bold text-red-400">
+          <Link
+            to={`/users?page=1&limit=${USERS_PER_PAGE}`}
+            className="text-2xl font-bold text-red-400"
+          >
             UserBase
           </Link>
           <nav>
