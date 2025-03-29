@@ -1,7 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
   Icon: LucideIcon;
 };
 

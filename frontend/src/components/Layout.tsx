@@ -41,7 +41,7 @@ const Layout = () => {
           </nav>
         </div>
       </header>
-      <main className="flex-grow p-4 bg-slate-200">
+      <main className="flex-grow p-4 bg-slate-200 flex flex-col">
         <Outlet />
       </main>
       <footer className="bg-slate-200 text-slate-500 text-sm p-4 border-t-[1px] border-slate-300">

@@ -22,11 +22,7 @@ const DynamicPagination = memo(
     currentPage: number;
   }) => {
     const navigate = useNavigate();
-    // const currentPage = useSelector(
-    //   (state: RootState) => state.pagination.currentPage
-    // );
 
-    console.log('currentpage=', currentPage);
     const dispatch = useDispatch();
 
     const handlePageChange = (page: number) => {

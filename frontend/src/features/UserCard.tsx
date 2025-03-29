@@ -2,15 +2,16 @@ import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Pencil, Trash2 } from 'lucide-react';
 import IconButton from '@/components/IconButton';
 import { User } from '@/types/user';
+import DeleteUserModal from './DeleteUserModal';
 
 const UserCard = ({ ...user }: User) => {
   const handleEdit = () => {
     console.log('edit card');
   };
 
-  const handleDelete = () => {
-    console.log('delete card');
-  };
+  // const handleDelete = () => {
+  //   console.log('delete card');
+  // };
 
   return (
     <Card className="group relative bg-white shadow-md rounded-lg w-70 xl:w-full">
@@ -42,7 +43,10 @@ const UserCard = ({ ...user }: User) => {
 
       <CardFooter className="flex justify-end gap-2 items-center mt-auto">
         <IconButton onClick={handleEdit} Icon={Pencil} />
-        <IconButton onClick={handleDelete} Icon={Trash2} />
+
+        <DeleteUserModal userId={user.id}>
+          <IconButton Icon={Trash2} />
+        </DeleteUserModal>
       </CardFooter>
     </Card>
   );

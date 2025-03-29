@@ -18,6 +18,12 @@ const UserListPage = () => {
 
   // console.log('currentpageList=', currentPage);
 
+  const {
+    data: { users = [], totalPages = 1 } = {},
+    error,
+    isLoading,
+  } = useGetUsersQuery({ page: currentPage, limit: USERS_PER_PAGE });
+
   useEffect(() => {
     navigate(`?page=${currentPage}&limit=${USERS_PER_PAGE}`, { replace: true });
   }, []);
@@ -31,11 +37,13 @@ const UserListPage = () => {
     }
   }, [location.search]);
 
-  const {
-    data: { users = [], totalPages = 1 } = {},
-    error,
-    isLoading,
-  } = useGetUsersQuery({ page: currentPage, limit: USERS_PER_PAGE });
+  useEffect(() => {
+    if (users.length === 0 && currentPage > totalPages) {
+      const newPage = totalPages > 1 ? totalPages : 1;
+      dispatch(setPage(newPage));
+      navigate(`?page=${newPage}&limit=${USERS_PER_PAGE}`, { replace: true });
+    }
+  }, [totalPages]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -45,7 +53,7 @@ const UserListPage = () => {
     return <div>Error loading users!</div>;
   }
   return (
-    <div className="mx-auto xl:max-w-7xl flex flex-col">
+    <div className="mx-auto xl:max-w-7xl flex flex-col flex-grow">
       <UserList users={users} />
       <DynamicPagination totalPages={totalPages} currentPage={currentPage} />
     </div>
