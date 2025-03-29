@@ -5,13 +5,42 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@prisma/client';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { PaginatedUsersResponse } from './types/user.types';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllUsers(): Promise<User[]> {
-    return this.prisma.user.findMany();
+  async getAllUsers(
+    page: number,
+    limit: number,
+  ): Promise<PaginatedUsersResponse> {
+    const skip = (page - 1) * limit;
+    const total = await this.prisma.user.count();
+
+    if (total === 0) {
+      return {
+        users: [],
+        total,
+        page: 1,
+        totalPages: 0,
+      };
+    }
+
+    const users: User[] = await this.prisma.user.findMany({
+      skip,
+      take: limit,
+    });
+
+    const totalPages = Math.ceil(total / limit);
+    const currentPage = page > totalPages ? totalPages : page;
+
+    return {
+      users,
+      total,
+      page: currentPage,
+      totalPages,
+    };
   }
 
   async getUserById(id: string): Promise<User> {

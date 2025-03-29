@@ -11,20 +11,27 @@ import {
   ParseUUIDPipe,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { PaginatedUsersResponse } from './types/user.types';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
+  async getAllUsers(
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '12',
+  ): Promise<PaginatedUsersResponse> {
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
+    return this.userService.getAllUsers(pageNumber, limitNumber);
   }
 
   @Get(':id')
