@@ -1,4 +1,4 @@
-import { User } from '@/types/user';
+import { PaginatedUsersResponse } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userApi = createApi({
@@ -7,7 +7,10 @@ export const userApi = createApi({
     baseUrl: '/api',
   }),
   endpoints: (builder) => ({
-    getUsers: builder.query<User[], void>({
+    getUsers: builder.query<
+      PaginatedUsersResponse,
+      { page: number; limit: number }
+    >({
       query: () => '/user',
     }),
   }),

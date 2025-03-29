@@ -10,3 +10,10 @@ export type User = {
   address: string;
   photo: string | null;
 };
+
+export type PaginatedUsersResponse = {
+  users: User[];
+  total: number;
+  page: number;
+  totalPages: number;
+};
