@@ -66,4 +66,4 @@ backend/dist/
 # frontend
 frontend/node_modules/
 frontend/build/
-backend/dist/
+frontend/dist/
