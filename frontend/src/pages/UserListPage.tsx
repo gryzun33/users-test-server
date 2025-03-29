@@ -16,7 +16,7 @@ const UserListPage = () => {
     (state: RootState) => state.pagination.currentPage
   );
 
-  // console.log('currentpageList=', currentPage);
+  console.log('currentpageList=', currentPage);
 
   const {
     data: { users = [], totalPages = 1 } = {},
@@ -53,7 +53,7 @@ const UserListPage = () => {
     return <div>Error loading users!</div>;
   }
   return (
-    <div className="mx-auto xl:max-w-7xl flex flex-col flex-grow">
+    <div className="mx-auto xl:max-w-7xl flex flex-col flex-grow w-full ">
       <UserList users={users} />
       <DynamicPagination totalPages={totalPages} currentPage={currentPage} />
     </div>
