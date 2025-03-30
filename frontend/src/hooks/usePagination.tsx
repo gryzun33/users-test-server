@@ -20,8 +20,8 @@ export const usePagination = (totalPages: number, currentPage: number) => {
     return result;
   }, [currentPage, totalPages]);
 
-  const leftEllipsis = currentPage > 2;
-  const rightEllipsis = currentPage < totalPages - 1;
+  const leftEllipsis = currentPage > 2 && totalPages > 3;
+  const rightEllipsis = currentPage < totalPages - 1 && totalPages > 3;
 
   return {
     pages,
