@@ -35,7 +35,7 @@ const paginationSlice = createSlice({
       const newTotalPages = Math.ceil(newTotalUsers / USERS_PER_PAGE);
       state.totalPages = newTotalPages;
 
-      state.currentPage = newTotalPages;
+      state.currentPage = 1;
     },
     removeUser: (state) => {
       const newTotalUsers = state.totalUsers - 1;

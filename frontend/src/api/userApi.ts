@@ -1,3 +1,4 @@
+import { addUser, removeUser } from '@/store/slices/paginationSlice';
 import { PaginatedUsersResponse, User } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
@@ -21,14 +22,32 @@ export const userApi = createApi({
         method: 'POST',
         body: newUser,
       }),
-      invalidatesTags: ['User'],
+      onQueryStarted: async (_, api) => {
+        const { dispatch, queryFulfilled } = api;
+        try {
+          await queryFulfilled;
+          dispatch(userApi.util.invalidateTags(['User']));
+          dispatch(addUser());
+        } catch (error) {
+          console.error('RTK Error during creatig user:', error);
+        }
+      },
     }),
     deleteUser: builder.mutation<void, string>({
       query: (userId) => ({
         url: `/user/${userId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['User'],
+      onQueryStarted: async (_, api) => {
+        const { dispatch, queryFulfilled } = api;
+        try {
+          await queryFulfilled;
+          dispatch(userApi.util.invalidateTags(['User']));
+          dispatch(removeUser());
+        } catch (error) {
+          console.error('RTK Error during removing user:', error);
+        }
+      },
     }),
   }),
 });

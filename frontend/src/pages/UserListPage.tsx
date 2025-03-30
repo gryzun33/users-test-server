@@ -1,7 +1,11 @@
 import { useGetUsersQuery } from '@/api/userApi';
 import DynamicPagination from '@/features/DynamicPagination';
 import UserList from '@/features/UserList';
-import { setPage } from '@/store/slices/paginationSlice';
+import {
+  setPage,
+  setTotalPages,
+  setTotalUsers,
+} from '@/store/slices/paginationSlice';
 import { RootState } from '@/store/store';
 import { USERS_PER_PAGE } from '@/utils/constants';
 import { useEffect } from 'react';
@@ -17,12 +21,16 @@ const UserListPage = () => {
   );
 
   const {
-    data: { users = [], totalPages = 1 } = {},
+    data: { users = [], totalPages = 1, total = 0 } = {},
     error,
     isLoading,
   } = useGetUsersQuery({ page: currentPage, limit: USERS_PER_PAGE });
 
   useEffect(() => {
+    console.log('totalusers=', total);
+    console.log('totalpages=', totalPages);
+    dispatch(setTotalPages(totalPages));
+    dispatch(setTotalUsers(total));
     navigate(`?page=${currentPage}&limit=${USERS_PER_PAGE}`, { replace: true });
   }, []);
 
