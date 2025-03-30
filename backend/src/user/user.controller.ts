@@ -29,8 +29,6 @@ export class UserController {
     @Query('page') page: string = '1',
     @Query('limit') limit: string = '12',
   ): Promise<PaginatedUsersResponse> {
-    console.log('page=', typeof page, page);
-    console.log('limit=', typeof limit, limit);
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
     return this.userService.getAllUsers(pageNumber, limitNumber);
@@ -44,14 +42,17 @@ export class UserController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('photo'))
+  @UseInterceptors(FileInterceptor('photoFile'))
   async createUser(
     @Body() createUserDto: CreateUserDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() photoFile: Express.Multer.File,
   ) {
-    if (file) {
-      createUserDto.photoFile = file;
+    if (photoFile) {
+      const photoPath = `/uploads/${photoFile.filename}`;
+      createUserDto.photo = photoPath;
     }
+
+    console.log('createuser=', createUserDto);
 
     return this.userService.createUser(createUserDto);
   }
@@ -64,9 +65,8 @@ export class UserController {
     @UploadedFile() photoFile: Express.Multer.File,
   ): Promise<User> {
     if (photoFile) {
-      updateUserDto.photoFile = photoFile;
-    } else if (updateUserDto.deletePhoto) {
-      updateUserDto.photoFile = null;
+      const photoPath = `/uploads/${photoFile.filename}`;
+      updateUserDto.photo = photoPath;
     }
 
     return this.userService.updateUser(id, updateUserDto);

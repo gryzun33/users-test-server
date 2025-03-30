@@ -9,7 +9,7 @@ import { join } from 'path';
     UserModule,
     PrismaModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'src', 'user', 'uploads'),
+      rootPath: join(process.cwd(), 'uploads'),
       serveRoot: '/uploads',
     }),
   ],

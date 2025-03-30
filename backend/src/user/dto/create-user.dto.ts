@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsIn,
   IsNotEmpty,
@@ -15,9 +16,11 @@ export class CreateUserDto {
   @IsNotEmpty()
   lastName: string;
 
+  @Transform(({ value }) => parseFloat(value))
   @IsNumber()
   height: number;
 
+  @Transform(({ value }) => parseFloat(value))
   @IsNumber()
   weight: number;
 
@@ -28,8 +31,8 @@ export class CreateUserDto {
   @IsNotEmpty()
   address: string;
 
-  @IsOptional()
-  photoFile?: Express.Multer.File | null;
+  // @IsOptional()
+  // photoFile?: Express.Multer.File | null;
 
   @IsOptional()
   photo?: string | null;

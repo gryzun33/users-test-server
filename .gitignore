@@ -61,6 +61,7 @@ backend/prisma/*.db-journal
 backend/node_modules/
 backend/build/
 backend/dist/
+backend/uploads
 
 
 # frontend
