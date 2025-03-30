@@ -16,8 +16,6 @@ const UserListPage = () => {
     (state: RootState) => state.pagination.currentPage
   );
 
-  console.log('currentpageList=', currentPage);
-
   const {
     data: { users = [], totalPages = 1 } = {},
     error,
@@ -36,14 +34,6 @@ const UserListPage = () => {
       dispatch(setPage(pageFromUrl));
     }
   }, [location.search]);
-
-  useEffect(() => {
-    if (users.length === 0 && currentPage > totalPages) {
-      const newPage = totalPages > 1 ? totalPages : 1;
-      dispatch(setPage(newPage));
-      navigate(`?page=${newPage}&limit=${USERS_PER_PAGE}`, { replace: true });
-    }
-  }, [totalPages]);
 
   if (isLoading) {
     return <div>Loading...</div>;
