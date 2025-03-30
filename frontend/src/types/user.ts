@@ -17,3 +17,13 @@ export type PaginatedUsersResponse = {
   page: number;
   totalPages: number;
 };
+
+export type NewUser = {
+  firstName: string;
+  lastName: string;
+  height: number;
+  weight: number;
+  gender: Gender;
+  address: string;
+  photo: FileList | null;
+};

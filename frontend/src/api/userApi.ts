@@ -15,7 +15,13 @@ export const userApi = createApi({
       query: ({ page, limit }) => `/user?page=${page}&limit=${limit}`,
       providesTags: ['User'],
     }),
-
+    createUser: builder.mutation({
+      query: (newUser) => ({
+        url: '/users',
+        method: 'POST',
+        body: newUser,
+      }),
+    }),
     deleteUser: builder.mutation<void, string>({
       query: (userId) => ({
         url: `/user/${userId}`,
