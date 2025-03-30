@@ -1,26 +1,52 @@
+import { useCreateUserMutation } from '@/api/userApi';
 import PhotoUpload from '@/components/FormComponents/PhotoUpload';
 import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
 import FormWrapper from '@/components/FormWrapper';
 import { Button } from '@/components/ui/button/button';
+import { NewUser } from '@/types/user';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
-type FormData = {
-  firstname: string;
-  lastname: string;
-  location: string;
-  weight: number;
-  height: number;
-  gender: string;
-  photoFile: File | null;
-};
+// type FormData = {
+//   firstname: string;
+//   lastname: string;
+//   location: string;
+//   weight: number;
+//   height: number;
+//   gender: string;
+//   photoFile: File | null;
+// };
 
 const CreateUserPage = () => {
-  const methods = useForm<FormData>();
+  const methods = useForm<NewUser>();
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const [createUser, { isLoading, isError }] = useCreateUserMutation();
+
+  const onSubmit: SubmitHandler<NewUser> = async (data) => {
     console.log('Submitted data:', data);
+
+    try {
+      const formData = new FormData();
+
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('address', data.address);
+      formData.append('weight', String(data.weight));
+      formData.append('height', String(data.height));
+      formData.append('gender', String(data.gender));
+
+      if (data.photoFile) {
+        formData.append('photoFile', data.photoFile);
+      }
+      await createUser(formData).unwrap();
+    } catch (err) {
+      console.error('Error creating user:', err);
+    }
   };
+
+  if (isError) {
+    return <div>Something went wrong. Try again later</div>;
+  }
 
   return (
     <FormProvider {...methods}>
@@ -29,8 +55,8 @@ const CreateUserPage = () => {
           onSubmit={methods.handleSubmit(onSubmit)}
           className="space-y-6 w-full"
         >
-          <TextInput name="firstname" label="First Name" required={true} />
-          <TextInput name="lastname" label="Last Name" required={true} />
+          <TextInput name="firstName" label="First Name" required={true} />
+          <TextInput name="lastName" label="Last Name" required={true} />
           <SelectInput
             name="gender"
             label="Gender"
@@ -49,12 +75,13 @@ const CreateUserPage = () => {
             required={true}
             type="number"
           />
-          <TextInput name="location" label="Location" required={true} />
+          <TextInput name="address" label="Location" required={true} />
           <PhotoUpload name="photoFile" />
 
           <Button
             type="submit"
             className="w-full mt-4 bg-slate-700 cursor-pointer hover:bg-slate-800"
+            disabled={isLoading}
           >
             Submit
           </Button>

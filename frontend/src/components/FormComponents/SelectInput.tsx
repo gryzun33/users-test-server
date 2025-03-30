@@ -34,7 +34,7 @@ const SelectInput = ({ name, label, options, required }: Props) => {
         }}
         render={({ field }) => (
           <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full mt-1">
               <SelectValue placeholder={`Select ${label}`} />
             </SelectTrigger>
             <SelectContent>

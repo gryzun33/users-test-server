@@ -1,4 +1,4 @@
-import { PaginatedUsersResponse } from '@/types/user';
+import { PaginatedUsersResponse, User } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userApi = createApi({
@@ -15,12 +15,13 @@ export const userApi = createApi({
       query: ({ page, limit }) => `/user?page=${page}&limit=${limit}`,
       providesTags: ['User'],
     }),
-    createUser: builder.mutation({
+    createUser: builder.mutation<User, FormData>({
       query: (newUser) => ({
-        url: '/users',
+        url: '/user',
         method: 'POST',
         body: newUser,
       }),
+      invalidatesTags: ['User'],
     }),
     deleteUser: builder.mutation<void, string>({
       query: (userId) => ({
@@ -32,4 +33,8 @@ export const userApi = createApi({
   }),
 });
 
-export const { useDeleteUserMutation, useGetUsersQuery } = userApi;
+export const {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+  useCreateUserMutation,
+} = userApi;

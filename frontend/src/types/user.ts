@@ -25,5 +25,5 @@ export type NewUser = {
   weight: number;
   gender: Gender;
   address: string;
-  photo: FileList | null;
+  photoFile: File | null;
 };

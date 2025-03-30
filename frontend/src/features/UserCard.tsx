@@ -9,16 +9,21 @@ const UserCard = ({ ...user }: User) => {
     console.log('edit card');
   };
 
-  // const handleDelete = () => {
-  //   console.log('delete card');
-  // };
+  let photoUrl = '';
+
+  if (user.photo) {
+    const isExternalPhoto = user.photo.startsWith('http');
+    photoUrl = isExternalPhoto
+      ? user.photo
+      : `http://localhost:4000${user.photo}`;
+  }
 
   return (
     <Card className="group relative bg-white shadow-md rounded-lg w-70 xl:w-full">
       <div className="self-center group relative w-40 h-40 overflow-hidden rounded-full border-2 border-slate-300">
         {user.photo ? (
           <img
-            src={user.photo}
+            src={photoUrl}
             alt={`${user.firstName} ${user.lastName}`}
             className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
           />
