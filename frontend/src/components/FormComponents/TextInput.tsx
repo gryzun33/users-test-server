@@ -44,7 +44,7 @@ const TextInput = ({
         })}
         type={type}
         id={name}
-        defaultValue={isEdit && getValues(name)}
+        defaultValue={isEdit ? getValues(name) : ''}
         className={cn('mt-1 bg-white', styles && styles.field)}
       />
       {error && error.message && (

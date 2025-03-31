@@ -1,4 +1,5 @@
 import { useGetOneUserQuery } from '@/api/userApi';
+import PhotoUpload from '@/components/FormComponents/PhotoUpload';
 import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
 import { Button } from '@/components/ui/button/button';
@@ -92,6 +93,12 @@ const EditForm = () => {
             name="address"
             label="Location"
             required={true}
+            styles={STYLES}
+            isEdit={true}
+          />
+          <PhotoUpload
+            name="photoFile"
+            existingPath={user.photo}
             styles={STYLES}
             isEdit={true}
           />
