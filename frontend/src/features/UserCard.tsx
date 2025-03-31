@@ -4,8 +4,12 @@ import IconButton from '@/components/IconButton';
 import { User } from '@/types/user';
 import DeleteUserModal from './DeleteUserModal';
 import EditModal from './EditModal';
+import { useDispatch } from 'react-redux';
+import { setUserId } from '@/store/slices/userSlice';
 
 const UserCard = ({ ...user }: User) => {
+  const dispatch = useDispatch();
+
   let photoUrl = '';
 
   if (user.photo) {
@@ -14,6 +18,10 @@ const UserCard = ({ ...user }: User) => {
       ? user.photo
       : `http://localhost:4000${user.photo}`;
   }
+
+  const handleEditClick = () => {
+    dispatch(setUserId(user.id));
+  };
 
   return (
     <>
@@ -46,7 +54,7 @@ const UserCard = ({ ...user }: User) => {
 
         <CardFooter className="flex justify-end gap-2 items-center mt-auto">
           <EditModal>
-            <IconButton Icon={Pencil} />
+            <IconButton Icon={Pencil} onClick={handleEditClick} />
           </EditModal>
           <DeleteUserModal userId={user.id}>
             <IconButton Icon={Trash2} />

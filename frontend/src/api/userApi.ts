@@ -32,6 +32,9 @@ export const userApi = createApi({
         }
       },
     }),
+    getOneUser: builder.query<User, string>({
+      query: (userId) => `/user/${userId}`,
+    }),
     createUser: builder.mutation<User, FormData>({
       query: (newUser) => ({
         url: '/user',
@@ -80,4 +83,5 @@ export const {
   useDeleteUserMutation,
   useGetUsersQuery,
   useCreateUserMutation,
+  useGetOneUserQuery,
 } = userApi;

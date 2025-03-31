@@ -1,6 +1,7 @@
 import { userApi } from '@/api/userApi';
 import { configureStore } from '@reduxjs/toolkit';
 import paginationReducer from './slices/paginationSlice';
+import userReducer from './slices/userSlice';
 import {
   FLUSH,
   PAUSE,
@@ -13,6 +14,7 @@ import {
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     pagination: paginationReducer,
     [userApi.reducerPath]: userApi.reducer,
   },

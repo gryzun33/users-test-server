@@ -1,3 +1,4 @@
+import { useGetOneUserQuery } from '@/api/userApi';
 import TextInput from '@/components/FormComponents/TextInput';
 import { Button } from '@/components/ui/button/button';
 import {
@@ -9,9 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { RootState } from '@/store/store';
 import { NewUser } from '@/types/user';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 const defaultUser: NewUser = {
   firstName: 'fff',
@@ -31,14 +34,36 @@ const STYLES = {
 };
 
 const EditForm = () => {
+  const userId = useSelector((state: RootState) => state.user.id);
+
+  // console.log('userId=', userId);
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useGetOneUserQuery(userId, {
+    skip: !userId,
+  });
+
   const methods = useForm<NewUser>({
-    defaultValues: defaultUser,
+    defaultValues: user || {},
   });
 
   const onSubmit: SubmitHandler<NewUser> = async (data) => {
     console.log('Updated data:', data);
   };
 
+  useEffect(() => {
+    if (user) {
+      methods.reset(user);
+    }
+  }, [user]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading user data</div>;
+  if (!user) return <div>No user data available</div>;
+
+  // console.log('dataUSER=', user);
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
