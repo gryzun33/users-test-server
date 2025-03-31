@@ -1,4 +1,5 @@
 import { useGetOneUserQuery } from '@/api/userApi';
+import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
 import { Button } from '@/components/ui/button/button';
 import {
@@ -16,21 +17,11 @@ import { ReactNode, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-const defaultUser: NewUser = {
-  firstName: 'fff',
-  lastName: 'fff',
-  height: 0,
-  weight: 0,
-  gender: 'other',
-  address: '',
-  photoFile: null,
-};
-
 const STYLES = {
-  wrapper: `grid grid-cols-4 items-center gap-4`,
-  label: 'text-right',
-  field: 'col-span-3',
-  error: 'left-[27%]',
+  wrapper: `xs:grid xs:grid-cols-4 xs:items-center xs:gap-4`,
+  label: '',
+  field: 'xs:col-span-3',
+  error: 'xs:left-[27%]',
 };
 
 const EditForm = () => {
@@ -79,6 +70,14 @@ const EditForm = () => {
             name="lastName"
             label="Last Name"
             required={true}
+            styles={STYLES}
+            isEdit={true}
+          />
+          <SelectInput
+            name="gender"
+            label="Gender"
+            options={['male', 'female', 'other']}
+            required
             styles={STYLES}
             isEdit={true}
           />
