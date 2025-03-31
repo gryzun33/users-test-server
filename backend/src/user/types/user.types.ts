@@ -1,8 +1,10 @@
 import { User } from '@prisma/client';
 
 export type PaginatedUsersResponse = {
-  users: User[];
+  users: UserResponse[];
   total: number;
   page: number;
   totalPages: number;
 };
+
+export type UserResponse = Omit<User, 'createdAt'>;

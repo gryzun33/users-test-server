@@ -18,7 +18,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { PaginatedUsersResponse } from './types/user.types';
+import { PaginatedUsersResponse, UserResponse } from './types/user.types';
 
 @Controller('user')
 export class UserController {
@@ -37,7 +37,7 @@ export class UserController {
   @Get(':id')
   async getUserById(
     @Param('id', new ParseUUIDPipe()) id: string,
-  ): Promise<User> {
+  ): Promise<UserResponse> {
     return this.userService.getUserById(id);
   }
 
@@ -46,7 +46,7 @@ export class UserController {
   async createUser(
     @Body() createUserDto: CreateUserDto,
     @UploadedFile() photoFile: Express.Multer.File,
-  ) {
+  ): Promise<UserResponse> {
     if (photoFile) {
       const photoPath = `/uploads/${photoFile.filename}`;
       createUserDto.photo = photoPath;
@@ -63,7 +63,7 @@ export class UserController {
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
     @UploadedFile() photoFile: Express.Multer.File,
-  ): Promise<User> {
+  ): Promise<UserResponse> {
     if (photoFile) {
       const photoPath = `/uploads/${photoFile.filename}`;
       updateUserDto.photo = photoPath;
