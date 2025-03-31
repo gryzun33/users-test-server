@@ -27,3 +27,8 @@ export type NewUser = {
   address: string;
   photoFile: File | null;
 };
+
+export type EditableUser = User & {
+  photoFile?: File | null;
+  photoDeleted?: boolean;
+};

@@ -2,18 +2,10 @@ import { useGetOneUserQuery } from '@/api/userApi';
 import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
 import { Button } from '@/components/ui/button/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { DialogFooter } from '@/components/ui/dialog';
 import { RootState } from '@/store/store';
-import { NewUser } from '@/types/user';
-import { ReactNode, useEffect } from 'react';
+import { EditableUser } from '@/types/user';
+import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -36,11 +28,11 @@ const EditForm = () => {
     skip: !userId,
   });
 
-  const methods = useForm<NewUser>({
+  const methods = useForm<EditableUser>({
     defaultValues: user || {},
   });
 
-  const onSubmit: SubmitHandler<NewUser> = async (data) => {
+  const onSubmit: SubmitHandler<EditableUser> = async (data) => {
     console.log('Updated data:', data);
   };
 
@@ -54,7 +46,6 @@ const EditForm = () => {
   if (error) return <div>Error loading user data</div>;
   if (!user) return <div>No user data available</div>;
 
-  // console.log('dataUSER=', user);
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -81,7 +72,31 @@ const EditForm = () => {
             styles={STYLES}
             isEdit={true}
           />
+          <TextInput
+            name="weight"
+            label="Weight"
+            required={true}
+            type="number"
+            styles={STYLES}
+            isEdit={true}
+          />
+          <TextInput
+            name="height"
+            label="Height"
+            required={true}
+            type="number"
+            styles={STYLES}
+            isEdit={true}
+          />
+          <TextInput
+            name="address"
+            label="Location"
+            required={true}
+            styles={STYLES}
+            isEdit={true}
+          />
         </div>
+
         <DialogFooter className="mt-3">
           <Button type="submit" className="cursor-pointer">
             Save changes
