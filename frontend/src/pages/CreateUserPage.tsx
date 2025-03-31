@@ -6,19 +6,11 @@ import FormWrapper from '@/components/FormWrapper';
 import { Button } from '@/components/ui/button/button';
 import { NewUser } from '@/types/user';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-
-// type FormData = {
-//   firstname: string;
-//   lastname: string;
-//   location: string;
-//   weight: number;
-//   height: number;
-//   gender: string;
-//   photoFile: File | null;
-// };
+import { useNavigate } from 'react-router';
 
 const CreateUserPage = () => {
   const methods = useForm<NewUser>();
+  const navigate = useNavigate();
 
   const [createUser, { isLoading, isError }] = useCreateUserMutation();
 
@@ -39,6 +31,7 @@ const CreateUserPage = () => {
         formData.append('photoFile', data.photoFile);
       }
       await createUser(formData).unwrap();
+      navigate('/users');
     } catch (err) {
       console.error('Error creating user:', err);
     }

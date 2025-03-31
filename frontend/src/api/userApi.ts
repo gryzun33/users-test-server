@@ -1,5 +1,12 @@
-import { addUser, removeUser } from '@/store/slices/paginationSlice';
+import {
+  addUser,
+  removeUser,
+  setTotalPages,
+  setTotalUsers,
+} from '@/store/slices/paginationSlice';
+import { RootState } from '@/store/store';
 import { PaginatedUsersResponse, User } from '@/types/user';
+import { USERS_PER_PAGE } from '@/utils/constants';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userApi = createApi({
@@ -15,6 +22,15 @@ export const userApi = createApi({
     >({
       query: ({ page, limit }) => `/user?page=${page}&limit=${limit}`,
       providesTags: ['User'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setTotalPages(data.totalPages));
+          dispatch(setTotalUsers(data.total));
+        } catch (error) {
+          console.error('Error updating pagination data:', error);
+        }
+      },
     }),
     createUser: builder.mutation<User, FormData>({
       query: (newUser) => ({
@@ -39,11 +55,19 @@ export const userApi = createApi({
         method: 'DELETE',
       }),
       onQueryStarted: async (_, api) => {
-        const { dispatch, queryFulfilled } = api;
+        const { dispatch, queryFulfilled, getState } = api;
         try {
           await queryFulfilled;
           dispatch(userApi.util.invalidateTags(['User']));
           dispatch(removeUser());
+
+          // maybe it's a strang solution but I didn't find another
+          const updatedPage = (getState() as RootState).pagination.currentPage;
+          window.history.replaceState(
+            null,
+            '',
+            `?page=${updatedPage}&limit=${USERS_PER_PAGE}`
+          );
         } catch (error) {
           console.error('RTK Error during removing user:', error);
         }
