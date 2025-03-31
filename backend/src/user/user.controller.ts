@@ -65,12 +65,21 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
     @UploadedFile() photoFile: Express.Multer.File,
   ): Promise<UserResponse> {
-    if (photoFile) {
-      const photoPath = `/uploads/${photoFile.filename}`;
-      updateUserDto.photo = photoPath;
+    console.log('updateduser=', updateUserDto);
+
+    const { photoDeleted, ...userData } = updateUserDto;
+    if (updateUserDto.photoDeleted === 'true' && !photoFile) {
+      console.log('deletedtrue');
+      await this.userService.deletePhoto(id);
+      userData.photo = null;
     }
 
-    return this.userService.updateUser(id, updateUserDto);
+    if (photoFile) {
+      const photoPath = `/uploads/${photoFile.filename}`;
+      userData.photo = photoPath;
+    }
+
+    return this.userService.updateUser(id, userData);
   }
 
   @Delete(':id')

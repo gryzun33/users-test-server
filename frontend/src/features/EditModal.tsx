@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import EditForm from './EditForm';
 
 type Props = {
@@ -14,8 +14,10 @@ type Props = {
 };
 
 const EditModal = ({ children }: Props) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -24,7 +26,7 @@ const EditModal = ({ children }: Props) => {
             Make changes to this user. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <EditForm />
+        <EditForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

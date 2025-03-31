@@ -50,8 +50,11 @@ const PhotoUpload = ({ name, existingPath, styles, isEdit }: Props) => {
   const handleRemovePhoto = () => {
     setPhoto(null);
     setValue(name, null);
+    if (isEdit) {
+      setValue('photoDeleted', true);
+    }
   };
-  console.log('edit=', isEdit);
+
   return (
     <div className={cn('relative', styles && styles.wrapper)}>
       <Label htmlFor={name} className={styles && styles.label}>
@@ -74,7 +77,7 @@ const PhotoUpload = ({ name, existingPath, styles, isEdit }: Props) => {
           <p>Click or drag file here to upload</p>
         )}
       </div>
-      {photo || existingPath ? (
+      {photo ? (
         <div
           className={cn(
             'mt-2',
@@ -88,7 +91,7 @@ const PhotoUpload = ({ name, existingPath, styles, isEdit }: Props) => {
             size="sm"
             variant="outline"
           >
-            {existingPath ? 'Remove Existing Photo' : 'RemovePhoto'}
+            Remove Photo
           </Button>
         </div>
       ) : null}

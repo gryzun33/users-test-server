@@ -13,7 +13,7 @@ export const userApi = createApi({
   reducerPath: 'userApi',
   tagTypes: ['User'],
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api',
+    baseUrl: 'http://localhost:4000',
   }),
   endpoints: (builder) => ({
     getUsers: builder.query<
@@ -34,6 +34,8 @@ export const userApi = createApi({
     }),
     getOneUser: builder.query<User, string>({
       query: (userId) => `/user/${userId}`,
+      providesTags: (result, _, id) =>
+        result ? [{ type: 'User', id }] : ['User'],
     }),
     createUser: builder.mutation<User, FormData>({
       query: (newUser) => ({
@@ -52,6 +54,15 @@ export const userApi = createApi({
         }
       },
     }),
+    updateUser: builder.mutation<User, { id: string; formData: FormData }>({
+      query: ({ id, formData }) => ({
+        url: `/user/${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     deleteUser: builder.mutation<void, string>({
       query: (userId) => ({
         url: `/user/${userId}`,
@@ -84,4 +95,5 @@ export const {
   useGetUsersQuery,
   useCreateUserMutation,
   useGetOneUserQuery,
+  useUpdateUserMutation,
 } = userApi;

@@ -1,4 +1,4 @@
-import { useGetOneUserQuery } from '@/api/userApi';
+import { useGetOneUserQuery, useUpdateUserMutation } from '@/api/userApi';
 import PhotoUpload from '@/components/FormComponents/PhotoUpload';
 import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
@@ -6,9 +6,13 @@ import { Button } from '@/components/ui/button/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { RootState } from '@/store/store';
 import { EditableUser } from '@/types/user';
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+
+type Props = {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
 
 const STYLES = {
   wrapper: `xs:grid xs:grid-cols-4 xs:items-center xs:gap-4`,
@@ -17,10 +21,9 @@ const STYLES = {
   error: 'xs:left-[27%]',
 };
 
-const EditForm = () => {
+const EditForm = ({ setOpen }: Props) => {
   const userId = useSelector((state: RootState) => state.user.id);
 
-  // console.log('userId=', userId);
   const {
     data: user,
     isLoading,
@@ -29,12 +32,46 @@ const EditForm = () => {
     skip: !userId,
   });
 
+  const [updateUser /*  { isLoading: isLoadingUpdate, error: updateError } */] =
+    useUpdateUserMutation();
+
   const methods = useForm<EditableUser>({
     defaultValues: user || {},
   });
 
   const onSubmit: SubmitHandler<EditableUser> = async (data) => {
     console.log('Updated data:', data);
+
+    try {
+      const formData = new FormData();
+
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('address', data.address);
+      formData.append('weight', String(data.weight));
+      formData.append('height', String(data.height));
+      formData.append('gender', String(data.gender));
+      if (data.photoDeleted) {
+        formData.append('photoDeleted', 'true');
+      }
+      if (data.photoFile) {
+        formData.append('photoFile', data.photoFile);
+      }
+
+      for (const pair of formData.entries()) {
+        console.log('formdata');
+        console.log(pair[0], pair[1]);
+      }
+
+      console.log('Sending update request...', userId, formData);
+      await updateUser({
+        id: userId,
+        formData,
+      }).unwrap();
+      setOpen(false);
+    } catch (err) {
+      console.error('Error updating user:', err);
+    }
   };
 
   useEffect(() => {

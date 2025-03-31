@@ -2,8 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '@prisma/client';
 import { PaginatedUsersResponse, UserResponse } from './types/user.types';
+import { unlink } from 'fs/promises';
+import * as path from 'path';
 
 @Injectable()
 export class UserService {
@@ -71,7 +72,7 @@ export class UserService {
 
   async updateUser(
     id: string,
-    updateUserDto: UpdateUserDto,
+    updateUserDto: Omit<UpdateUserDto, 'photoDeleted'>,
   ): Promise<UserResponse> {
     return this.prisma.user.update({
       where: { id },
@@ -88,5 +89,31 @@ export class UserService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
     await this.prisma.user.delete({ where: { id } });
+  }
+
+  async deletePhoto(userId: string): Promise<void> {
+    const user = await this.prisma.user.update({
+      where: { id: userId },
+      data: { photo: null },
+      select: { photo: true },
+    });
+    console.log('deletephotoservice');
+    const photoPath = user.photo;
+
+    if (photoPath) {
+      if (photoPath.startsWith('/uploads/')) {
+        const filePath = path.join(__dirname, '..', '..', photoPath);
+        try {
+          await unlink(filePath);
+          console.log(`Photo deleted: ${filePath}`);
+        } catch (error) {
+          console.error(`Error deleting local file: ${error.message}`);
+        }
+      } else if (photoPath.startsWith('http')) {
+        console.log(`Photo stored remotely at: ${photoPath}`);
+      }
+    }
+
+    console.log(`Photo path removed from database for user ${userId}`);
   }
 }
