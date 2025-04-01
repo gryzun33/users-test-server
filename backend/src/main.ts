@@ -3,8 +3,6 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import { CatchEverythingFilter } from './common/catch-everything.filter';
 import { ValidationPipe } from '@nestjs/common';
-import { join } from 'path';
-import * as express from 'express';
 import { LoggingService } from './logging/logging.service';
 
 dotenv.config();

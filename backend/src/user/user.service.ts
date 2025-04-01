@@ -112,7 +112,8 @@ export class UserService {
           await unlink(filePath);
           console.log(`Photo deleted: ${filePath}`);
         } catch (error) {
-          console.error(`Error deleting local file: ${error.message}`);
+          const e = error as Error;
+          console.error(`Error deleting local file: ${e.message}`);
         }
       } else if (photoPath.startsWith('http')) {
         console.log(`Photo stored remotely at: ${photoPath}`);

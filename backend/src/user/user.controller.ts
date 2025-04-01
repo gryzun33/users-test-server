@@ -62,7 +62,7 @@ export class UserController {
     @UploadedFile() photoFile: Express.Multer.File,
   ): Promise<UserResponse> {
     const { photoDeleted, ...userData } = updateUserDto;
-    if (updateUserDto.photoDeleted === 'true' && !photoFile) {
+    if (photoDeleted === 'true' && !photoFile) {
       await this.userService.deletePhoto(id);
       userData.photo = null;
     }

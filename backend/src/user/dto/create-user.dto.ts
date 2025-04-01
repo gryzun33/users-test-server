@@ -16,11 +16,11 @@ export class CreateUserDto {
   @IsNotEmpty()
   lastName: string;
 
-  @Transform(({ value }) => parseFloat(value))
+  @Transform(({ value }: { value: string }) => parseFloat(value))
   @IsNumber()
   height: number;
 
-  @Transform(({ value }) => parseFloat(value))
+  @Transform(({ value }: { value: string }) => parseFloat(value))
   @IsNumber()
   weight: number;
 
