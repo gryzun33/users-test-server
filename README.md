@@ -1,4 +1,4 @@
-# Users Server
+# UserBase
 
 ## Downloading
 
@@ -21,9 +21,11 @@ Check if you are in branch `develop`
 
 ```
 npm install
+
+npm run install:in
 ```
 
-## Preparing to running
+## Preparing to run
 
 In folder `frontend` rename file `.env.example` to `.env`
 
@@ -35,9 +37,9 @@ To create database (apply prisma migrations and add seeds)
 npm run migrate:seed
 ```
 
-## Running project
+## Running the project
 
-To run project in development mode, it's recommended to run frontend and backend in different terminals:
+To run project in development mode, it's recommended to run frontend and backend in separate terminals:
 
 To run frontend:
 
@@ -50,3 +52,7 @@ To run backend:
 ```
 npm run backend
 ```
+
+## Notes
+
+To check creating new user you can use photos from folder `public` in the root of repo
