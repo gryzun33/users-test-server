@@ -37,7 +37,6 @@ export class UserController {
   async getUserById(
     @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<UserResponse> {
-    console.log('getUSER=', id);
     return this.userService.getUserById(id);
   }
 

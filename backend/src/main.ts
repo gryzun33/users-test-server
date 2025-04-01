@@ -5,6 +5,7 @@ import { CatchEverythingFilter } from './common/catch-everything.filter';
 import { ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import * as express from 'express';
+import { LoggingService } from './logging/logging.service';
 
 dotenv.config();
 
@@ -19,8 +20,10 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
+  const loggingService = app.get(LoggingService);
   const httpAdapter = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new CatchEverythingFilter(httpAdapter));
+
+  app.useGlobalFilters(new CatchEverythingFilter(httpAdapter, loggingService));
 
   app.useGlobalPipes(
     new ValidationPipe({
