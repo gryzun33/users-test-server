@@ -6,6 +6,7 @@ import DeleteUserModal from './DeleteUserModal';
 import EditModal from './EditModal';
 import { useDispatch } from 'react-redux';
 import { setUserId } from '@/store/slices/userSlice';
+import { backendUrl } from '@/utils/constants';
 
 const UserCard = ({ ...user }: User) => {
   const dispatch = useDispatch();
@@ -14,9 +15,7 @@ const UserCard = ({ ...user }: User) => {
 
   if (user.photo) {
     const isExternalPhoto = user.photo.startsWith('http');
-    photoUrl = isExternalPhoto
-      ? user.photo
-      : `http://localhost:4000${user.photo}`;
+    photoUrl = isExternalPhoto ? user.photo : `${backendUrl}${user.photo}`;
   }
 
   const handleEditClick = () => {

@@ -6,14 +6,14 @@ import {
 } from '@/store/slices/paginationSlice';
 import { RootState } from '@/store/store';
 import { PaginatedUsersResponse, User } from '@/types/user';
-import { USERS_PER_PAGE } from '@/utils/constants';
+import { backendUrl, USERS_PER_PAGE } from '@/utils/constants';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   tagTypes: ['User'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4000',
+    baseUrl: backendUrl,
   }),
   endpoints: (builder) => ({
     getUsers: builder.query<
