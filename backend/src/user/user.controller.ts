@@ -16,7 +16,6 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { PaginatedUsersResponse, UserResponse } from './types/user.types';
 
@@ -53,23 +52,18 @@ export class UserController {
       createUserDto.photo = photoPath;
     }
 
-    console.log('createuser=', createUserDto);
-
     return this.userService.createUser(createUserDto);
   }
 
   @Put(':id')
   @UseInterceptors(FileInterceptor('photoFile'))
   async updateUser(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateUserDto: UpdateUserDto,
     @UploadedFile() photoFile: Express.Multer.File,
   ): Promise<UserResponse> {
-    console.log('updateduser=', updateUserDto);
-
     const { photoDeleted, ...userData } = updateUserDto;
     if (updateUserDto.photoDeleted === 'true' && !photoFile) {
-      console.log('deletedtrue');
       await this.userService.deletePhoto(id);
       userData.photo = null;
     }

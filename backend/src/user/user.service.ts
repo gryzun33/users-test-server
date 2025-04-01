@@ -74,13 +74,19 @@ export class UserService {
     id: string,
     updateUserDto: Omit<UpdateUserDto, 'photoDeleted'>,
   ): Promise<UserResponse> {
-    return this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where: { id },
       data: updateUserDto,
       omit: {
         createdAt: true,
       },
     });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
   }
 
   async deleteUser(id: string): Promise<void> {
@@ -97,7 +103,6 @@ export class UserService {
       data: { photo: null },
       select: { photo: true },
     });
-    console.log('deletephotoservice');
     const photoPath = user.photo;
 
     if (photoPath) {
@@ -113,7 +118,5 @@ export class UserService {
         console.log(`Photo stored remotely at: ${photoPath}`);
       }
     }
-
-    console.log(`Photo path removed from database for user ${userId}`);
   }
 }

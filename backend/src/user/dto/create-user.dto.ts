@@ -31,9 +31,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   address: string;
 
-  // @IsOptional()
-  // photoFile?: Express.Multer.File | null;
-
   @IsOptional()
   photo?: string | null;
 }
