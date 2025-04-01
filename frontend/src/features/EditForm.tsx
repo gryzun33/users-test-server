@@ -40,8 +40,6 @@ const EditForm = ({ setOpen }: Props) => {
   });
 
   const onSubmit: SubmitHandler<EditableUser> = async (data) => {
-    console.log('Updated data:', data);
-
     try {
       const formData = new FormData();
 
@@ -58,12 +56,6 @@ const EditForm = ({ setOpen }: Props) => {
         formData.append('photoFile', data.photoFile);
       }
 
-      for (const pair of formData.entries()) {
-        console.log('formdata');
-        console.log(pair[0], pair[1]);
-      }
-
-      console.log('Sending update request...', userId, formData);
       await updateUser({
         id: userId,
         formData,

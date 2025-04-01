@@ -43,7 +43,6 @@ const UserListPage = () => {
     return <div>Error loading users!</div>;
   }
 
-  console.log('render userlistpage');
   return (
     <div className="mx-auto xl:max-w-7xl flex flex-col flex-grow w-full ">
       <UserList users={users} />

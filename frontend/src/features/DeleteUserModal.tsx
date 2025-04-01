@@ -23,7 +23,6 @@ const DeleteUserModal = ({ children, userId }: Props) => {
   const handleDelete = async () => {
     try {
       await deleteUser(userId).unwrap();
-      console.log('User deleted successfully!');
     } catch (err) {
       console.error('Error deleting user:', err);
     }

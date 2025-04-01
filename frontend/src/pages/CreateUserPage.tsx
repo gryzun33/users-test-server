@@ -2,7 +2,7 @@ import { useCreateUserMutation } from '@/api/userApi';
 import PhotoUpload from '@/components/FormComponents/PhotoUpload';
 import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
-import FormWrapper from '@/components/FormWrapper';
+import FormWrapper from '@/components/FormComponents/FormWrapper';
 import { Button } from '@/components/ui/button/button';
 import { NewUser } from '@/types/user';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -15,8 +15,6 @@ const CreateUserPage = () => {
   const [createUser, { isLoading, isError }] = useCreateUserMutation();
 
   const onSubmit: SubmitHandler<NewUser> = async (data) => {
-    console.log('Submitted data:', data);
-
     try {
       const formData = new FormData();
 
