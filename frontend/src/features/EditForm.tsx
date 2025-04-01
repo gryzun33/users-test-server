@@ -1,11 +1,14 @@
 import { useGetOneUserQuery, useUpdateUserMutation } from '@/api/userApi';
+import { ErrorAlert } from '@/components/ErrorAlert';
 import PhotoUpload from '@/components/FormComponents/PhotoUpload';
 import SelectInput from '@/components/FormComponents/SelectInput';
 import TextInput from '@/components/FormComponents/TextInput';
+import { Loader } from '@/components/Loader';
 import { Button } from '@/components/ui/button/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { RootState } from '@/store/store';
 import { EditableUser } from '@/types/user';
+import { getErrorMessage } from '@/utils/getErrorMessage';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -32,7 +35,7 @@ const EditForm = ({ setOpen }: Props) => {
     skip: !userId,
   });
 
-  const [updateUser /*  { isLoading: isLoadingUpdate, error: updateError } */] =
+  const [updateUser, { isLoading: isLoadingUpdate, error: updateError }] =
     useUpdateUserMutation();
 
   const methods = useForm<EditableUser>({
@@ -72,8 +75,12 @@ const EditForm = ({ setOpen }: Props) => {
     }
   }, [user]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading user data</div>;
+  if (isLoading) return <Loader />;
+  if (error) return <ErrorAlert>{getErrorMessage(error)}</ErrorAlert>;
+  if (updateError)
+    return (
+      <ErrorAlert>Error during updating user. Try again later.</ErrorAlert>
+    );
   if (!user) return <div>No user data available</div>;
 
   return (
@@ -134,7 +141,11 @@ const EditForm = ({ setOpen }: Props) => {
         </div>
 
         <DialogFooter className="mt-3">
-          <Button type="submit" className="cursor-pointer">
+          <Button
+            type="submit"
+            className="cursor-pointer"
+            disabled={isLoadingUpdate}
+          >
             Save changes
           </Button>
         </DialogFooter>

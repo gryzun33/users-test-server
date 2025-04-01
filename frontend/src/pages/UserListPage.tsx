@@ -1,9 +1,12 @@
 import { useGetUsersQuery } from '@/api/userApi';
+import { ErrorAlert } from '@/components/ErrorAlert';
+import { Loader } from '@/components/Loader';
 import DynamicPagination from '@/features/DynamicPagination';
 import UserList from '@/features/UserList';
 import { setPage } from '@/store/slices/paginationSlice';
 import { RootState } from '@/store/store';
 import { USERS_PER_PAGE } from '@/utils/constants';
+import { getErrorMessage } from '@/utils/getErrorMessage';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
@@ -20,6 +23,7 @@ const UserListPage = () => {
     data: { users = [], totalPages = 1 } = {},
     error,
     isLoading,
+    isFetching,
   } = useGetUsersQuery({ page: currentPage, limit: USERS_PER_PAGE });
 
   useEffect(() => {
@@ -35,12 +39,12 @@ const UserListPage = () => {
     }
   }, [location.search]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isLoading || isFetching) {
+    return <Loader />;
   }
 
   if (error) {
-    return <div>Error loading users!</div>;
+    return <ErrorAlert>{getErrorMessage(error)}</ErrorAlert>;
   }
 
   return (

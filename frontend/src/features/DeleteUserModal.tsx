@@ -1,4 +1,5 @@
 import { useDeleteUserMutation } from '@/api/userApi';
+import { ErrorAlert } from '@/components/ErrorAlert';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +19,7 @@ type Props = {
 };
 
 const DeleteUserModal = ({ children, userId }: Props) => {
-  const [deleteUser, { isLoading }] = useDeleteUserMutation();
+  const [deleteUser, { isLoading, isError }] = useDeleteUserMutation();
 
   const handleDelete = async () => {
     try {
@@ -27,6 +28,11 @@ const DeleteUserModal = ({ children, userId }: Props) => {
       console.error('Error deleting user:', err);
     }
   };
+
+  if (isError)
+    return (
+      <ErrorAlert>Error during removing user. Try again later.</ErrorAlert>
+    );
 
   return (
     <AlertDialog>
