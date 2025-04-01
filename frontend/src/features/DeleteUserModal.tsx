@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { ReactNode } from 'react';
+import { toast } from 'sonner';
 
 type Props = {
   children: ReactNode;
@@ -24,6 +25,7 @@ const DeleteUserModal = ({ children, userId }: Props) => {
   const handleDelete = async () => {
     try {
       await deleteUser(userId).unwrap();
+      toast.success('User was removed successfully');
     } catch (err) {
       console.error('Error deleting user:', err);
     }

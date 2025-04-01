@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button/button';
 import { NewUser } from '@/types/user';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 
 const CreateUserPage = () => {
   const methods = useForm<NewUser>();
@@ -29,6 +30,7 @@ const CreateUserPage = () => {
         formData.append('photoFile', data.photoFile);
       }
       await createUser(formData).unwrap();
+      toast.success('New user was created successfully');
       navigate('/users');
     } catch (err) {
       console.error('Error creating user:', err);

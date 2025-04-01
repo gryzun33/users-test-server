@@ -12,6 +12,7 @@ import { getErrorMessage } from '@/utils/getErrorMessage';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { toast } from 'sonner';
 
 type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -64,6 +65,7 @@ const EditForm = ({ setOpen }: Props) => {
         formData,
       }).unwrap();
       setOpen(false);
+      toast.success('User was updated successfully');
     } catch (err) {
       console.error('Error updating user:', err);
     }

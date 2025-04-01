@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
-
 import Header from './Header';
 import Footer from './Footer';
+import { Toaster } from '../ui/toaster';
 
 const Layout = () => {
   return (
@@ -11,6 +11,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <Toaster />
     </div>
   );
 };
