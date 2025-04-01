@@ -77,24 +77,25 @@ const PhotoUpload = ({ name, existingPath, styles, isEdit }: Props) => {
           <p>Click or drag file here to upload</p>
         )}
       </div>
-      {photo ? (
-        <div
-          className={cn(
-            'mt-2',
-            isEdit && 'xs:col-span-full xs:flex xs:justify-end'
-          )}
+
+      <div
+        className={cn(
+          'mt-2',
+          isEdit && 'xs:col-span-full xs:flex xs:justify-end'
+        )}
+      >
+        <Button
+          type="button"
+          onClick={handleRemovePhoto}
+          className="text-xs cursor-pointer"
+          size="sm"
+          variant="outline"
+          disabled={!photo}
         >
-          <Button
-            type="button"
-            onClick={handleRemovePhoto}
-            className="text-xs cursor-pointer"
-            size="sm"
-            variant="outline"
-          >
-            Remove Photo
-          </Button>
-        </div>
-      ) : null}
+          Remove Photo
+        </Button>
+      </div>
+
       {fileRejections.length > 0 && (
         <p
           className={cn(
