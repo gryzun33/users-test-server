@@ -24,8 +24,8 @@ const UserCard = ({ ...user }: User) => {
 
   return (
     <>
-      <Card className="group relative bg-white shadow-md rounded-lg w-70 xl:w-full">
-        <div className="self-center group relative w-40 h-40 overflow-hidden rounded-full border-2 border-slate-300">
+      <Card className="group relative bg-white shadow-md rounded-lg w-60 lg:w-70 xl:w-full">
+        <div className="self-center group relative w-34 h-34 lg:w-40 lg:h-40 overflow-hidden rounded-full border-2 border-slate-300">
           {user.photo ? (
             <img
               src={photoUrl}
@@ -38,11 +38,11 @@ const UserCard = ({ ...user }: User) => {
             </div>
           )}
         </div>
-        <CardTitle className="self-center mt-2 px-2 text-xl text-center text-slate-800 overflow-hidden text-ellipsis line-clamp-2 break-all">
+        <CardTitle className="self-center mt-1 lg:mt-2 px-2 text-lg lg:text-xl text-center text-slate-800 overflow-hidden text-ellipsis line-clamp-2 break-all">
           {user.firstName} {user.lastName}
         </CardTitle>
 
-        <CardContent className="text-center p-4">
+        <CardContent className="text-center p-2 lg:p-4 text-sm">
           <p className="text-gray-500">{user.gender}</p>
           <p className="text-gray-700">Height: {user.height} cm</p>
           <p className="text-gray-700">Weight: {user.weight} kg</p>
