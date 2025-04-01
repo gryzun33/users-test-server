@@ -10,7 +10,6 @@
     "frontend": "npm run dev --prefix frontend",
     "backend": "npm run start:dev --prefix backend",
     "migrate:seed": "npm run migrate:seed --prefix backend",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
     "install": "concurrently \"npm install --prefix frontend\" \"npm install --prefix backend\""
   },
   "devDependencies": {
