@@ -1,4 +1,4 @@
-import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
+import { Card, CardFooter, CardTitle } from '@/components/ui/card';
 import { Pencil, Trash2 } from 'lucide-react';
 import IconButton from '@/components/IconButton';
 import { User } from '@/types/user';
@@ -6,17 +6,14 @@ import DeleteUserModal from './DeleteUserModal';
 import EditModal from './EditModal';
 import { useDispatch } from 'react-redux';
 import { setUserId } from '@/store/slices/userSlice';
-import { backendUrl } from '@/utils/constants';
+import { getPhotoUrl } from '@/utils/getPhotoUrl';
+import UserImage from '@/components/CardComponents/UserImage';
+import UserContent from '@/components/CardComponents/UserContent';
 
 const UserCard = ({ ...user }: User) => {
   const dispatch = useDispatch();
 
-  let photoUrl = '';
-
-  if (user.photo) {
-    const isExternalPhoto = user.photo.startsWith('http');
-    photoUrl = isExternalPhoto ? user.photo : `${backendUrl}${user.photo}`;
-  }
+  const photoUrl = getPhotoUrl(user.photo);
 
   const handleEditClick = () => {
     dispatch(setUserId(user.id));
@@ -25,31 +22,21 @@ const UserCard = ({ ...user }: User) => {
   return (
     <>
       <Card className="group relative bg-white shadow-md rounded-lg w-60 lg:w-70 xl:w-full">
-        <div className="self-center group relative w-34 h-34 lg:w-40 lg:h-40 overflow-hidden rounded-full border-2 border-slate-300">
-          {user.photo ? (
-            <img
-              src={photoUrl}
-              alt={`${user.firstName} ${user.lastName}`}
-              className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-500">
-              No Photo
-            </div>
-          )}
-        </div>
+        <UserImage
+          photoUrl={photoUrl}
+          firstName={user.firstName}
+          lastName={user.lastName}
+        />
         <CardTitle className="self-center mt-1 lg:mt-2 px-2 text-lg lg:text-xl text-center text-slate-800 overflow-hidden text-ellipsis line-clamp-2 break-all">
           {user.firstName} {user.lastName}
         </CardTitle>
 
-        <CardContent className="text-center p-2 lg:p-4 text-sm">
-          <p className="text-gray-500">{user.gender}</p>
-          <p className="text-gray-700">Height: {user.height} cm</p>
-          <p className="text-gray-700">Weight: {user.weight} kg</p>
-          <p className="text-gray-700 overflow-hidden text-ellipsis line-clamp-2">
-            {user.address}
-          </p>
-        </CardContent>
+        <UserContent
+          gender={user.gender}
+          height={user.height}
+          weight={user.weight}
+          address={user.address}
+        />
 
         <CardFooter className="flex justify-end gap-2 items-center mt-auto">
           <EditModal>
