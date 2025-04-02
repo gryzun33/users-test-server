@@ -22,7 +22,6 @@ Check if you are in branch `develop`
 ```
 npm install
 
-npm run install:in
 ```
 
 ## Preparing to run
