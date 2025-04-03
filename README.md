@@ -52,6 +52,24 @@ To run backend:
 npm run backend
 ```
 
+To run frontend and backend in one terminal in development mode:
+
+```
+npm run dev
+```
+
+To build the project:
+
+```
+npm run build
+```
+
+To run project in production mode:
+
+```
+npm run start
+```
+
 ## Notes
 
 To check creating new user you can use photos from folder `public` in the root of repo
