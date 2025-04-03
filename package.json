@@ -1,5 +1,6 @@
 {
-  "name": "users-test-server",
+  "name": "userbase",
+  "packageManager": "npm@10.8.3",
   "version": "1.0.0",
   "private": true,
   "keywords": [],
@@ -11,10 +12,14 @@
     "backend"
   ],
   "scripts": {
-    "frontend": "npm run dev --workspace frontend",
-    "backend": "npm run start:dev --workspace backend",
-    "migrate:seed": "npm run migrate:seed --workspace backend",
-    "dev": "concurrently \"npm run dev --workspace frontend\" \"npm run start --workspace backend\""
+    "frontend": "npm run dev --workspace=frontend",
+    "backend": "npm run start:dev --workspace=backend",
+    "migrate:seed": "npm run migrate:seed --workspace=backend",
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run start --workspace=backend\"",
+    "build": "concurrently \"npm run build --workspace=frontend\" \"npm run build --workspace=backend\"",
+    "start": "concurrently \"npm run preview --workspace=frontend\" \"npm run start:prod --workspace=backend\"",
+    "start:frontend": "npm run preview --workspace=frontend",
+    "start:backend": "npm run start:prod --workspace=backend"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
